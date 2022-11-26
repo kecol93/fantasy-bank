@@ -4,6 +4,7 @@ import io.fantasy.bank.backend.integration.entity.User;
 import io.fantasy.bank.backend.integration.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -14,19 +15,13 @@ public class UserEntityService {
         this.userRepository = userRepository;
     }
 
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
+    public User findUserByPersonalNumber(String personalNumber) {
+        return userRepository.findByPersonalNumber(personalNumber).get(0);
     }
 
-    public User getUserById(int id) {
-        return userRepository.findById(id).get();
-    }
-
-    public void saveOrUpdate(User user) {
-        userRepository.save(user);
-    }
-
-    public void delete(int id) {
-        userRepository.deleteById(id);
+    public void saveUser(User user, BigDecimal amount) {
+        
     }
 }
+
+

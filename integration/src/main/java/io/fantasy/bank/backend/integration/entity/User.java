@@ -12,8 +12,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -32,10 +34,10 @@ public class User {
     @Column(nullable = false)
     private String lastName;
     
-    @Column(nullable = false)
+    @Column(nullable = false, unique=true)
     private String personalNumber;
 
-    @OneToOne
-    @JoinColumn(name = "account_id", referencedColumnName = "id", nullable = false)
-    private Account account;
+    @OneToMany(mappedBy="user")
+    private Set<Account> accounts;
+
 }
