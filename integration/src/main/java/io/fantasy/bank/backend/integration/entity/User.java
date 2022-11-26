@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -37,7 +38,8 @@ public class User {
     @Column(nullable = false, unique=true)
     private String personalNumber;
 
-    @OneToMany(mappedBy="user")
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
     private Set<Account> accounts;
 
 }

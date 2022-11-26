@@ -2,6 +2,7 @@ package io.fantasy.bank.backend.rest.controller;
 
 import io.fantasy.bank.backend.rest.model.user.LoginDTO;
 import io.fantasy.bank.backend.rest.model.user.RegistrationDTO;
+import io.fantasy.bank.backend.rest.service.LoginService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,8 +13,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class LoginController {
 
+    private final LoginService loginService;
+
+    public LoginController(LoginService loginService) {
+        this.loginService = loginService;
+    }
+
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody LoginDTO loginDTO) {
+        loginService.login();
         return ResponseEntity.status(HttpStatus.OK).body("login");
     }
 
@@ -25,6 +33,7 @@ public class LoginController {
 
     @PostMapping("/registration")
     public ResponseEntity<String> registration(@RequestBody RegistrationDTO registrationDTO) {
+        loginService.registration(registrationDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body("registration");
     }
 

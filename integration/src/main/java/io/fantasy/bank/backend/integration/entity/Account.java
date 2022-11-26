@@ -2,10 +2,12 @@ package io.fantasy.bank.backend.integration.entity;
 
 import io.fantasy.bank.backend.common.CurrencyType;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -21,6 +23,7 @@ import java.math.BigDecimal;
 @Entity
 @Getter
 @Setter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "FB_ACCOUNT")
@@ -37,6 +40,6 @@ public class Account {
     private CurrencyType currency;
 
     @ManyToOne
-    @JoinColumn(name="user_id", nullable=false)
+    @JoinColumn(name = "user_id", insertable = false, updatable = false)
     private User user;
 }

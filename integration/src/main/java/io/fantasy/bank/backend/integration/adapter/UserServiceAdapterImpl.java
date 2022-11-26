@@ -3,6 +3,7 @@ package io.fantasy.bank.backend.integration.adapter;
 import io.fantasy.bank.backend.integration.entity.User;
 import io.fantasy.bank.backend.integration.mapper.UserMapper;
 import io.fantasy.bank.backend.integration.service.UserEntityService;
+import io.fantasy.bank.backend.rest.model.user.RegistrationDTO;
 import io.fantasy.bank.backend.rest.model.user.UserDTO;
 import io.fantasy.bank.backend.rest.service.adapter.UserServiceAdapter;
 import org.springframework.stereotype.Service;
@@ -22,5 +23,11 @@ public class UserServiceAdapterImpl implements UserServiceAdapter {
     public UserDTO getUserByPersonalNumber(String personalNumber) {
         User user = userEntityService.findUserByPersonalNumber(personalNumber);
         return userMapper.mapUserToUserDTO(user);
+    }
+
+    @Override
+    public void saveUser(RegistrationDTO registrationDTO) {
+        User user = userMapper.mapRegistrationDTOtoUser(registrationDTO);
+        userEntityService.saveUser(user);
     }
 }
