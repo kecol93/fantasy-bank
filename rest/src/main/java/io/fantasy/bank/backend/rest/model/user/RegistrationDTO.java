@@ -1,5 +1,6 @@
 package io.fantasy.bank.backend.rest.model.user;
 
+import io.fantasy.bank.backend.rest.validator.annotation.PersonalIdentityNumberValidation;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,6 +15,7 @@ import java.math.BigDecimal;
 public class RegistrationDTO {
     private String firstName;
     private String lastName;
+    @PersonalIdentityNumberValidation()
     private String personalNumber;
     private BigDecimal amount;
 }
