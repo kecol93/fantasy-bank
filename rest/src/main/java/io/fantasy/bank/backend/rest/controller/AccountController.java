@@ -4,6 +4,7 @@ import io.fantasy.bank.backend.rest.model.account.ExchangeDTO;
 import io.fantasy.bank.backend.rest.service.AccountService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,10 +20,10 @@ public class AccountController {
         this.accountService = accountService;
     }
 
-    @PostMapping("/exchange")
-    public ResponseEntity<String> exchange(@RequestBody ExchangeDTO exchangeDTO) {
-        accountService.exchange("12345678910", exchangeDTO);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body("exchanged");
+    @PostMapping("/exchange/{personalNumber}")
+    public ResponseEntity<Void> exchange(@PathVariable String personalNumber, @RequestBody ExchangeDTO exchangeDTO) {
+        accountService.exchange(personalNumber, exchangeDTO);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 
     }
 
