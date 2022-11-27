@@ -1,0 +1,7 @@
+api:
+  exchange-rate:
+    host: "https://api.nbp.pl"
+    path: "/api/exchangerates/rates/C/"
+    main-currency: "PLN"
+    query-parameters:
+      format: JSON

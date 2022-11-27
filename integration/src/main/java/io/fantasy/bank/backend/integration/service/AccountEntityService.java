@@ -21,21 +21,21 @@ public class AccountEntityService {
         this.userRepository = userRepository;
     }
 
-    public void exchange(String personalNumber, BigDecimal amount, CurrencyType fromCurrencyAccount, CurrencyType toCurrencyAccount) {
+    public void exchange(String personalNumber, BigDecimal amount, CurrencyType fromCurrencyAccount, CurrencyType toCurrencyAccount, BigDecimal exchangeRate) {
         User user = userRepository.findByPersonalNumber(personalNumber).get(0);
         Account fromAccount = getAccountByCurrency(user.getAccounts(), fromCurrencyAccount).orElseThrow(RuntimeException::new);
         Account toAccount = getAccountByCurrency(user.getAccounts(), toCurrencyAccount).orElse(Account.builder().amount(BigDecimal.valueOf(0)).currency(toCurrencyAccount).user(user).build());
 
-        doExchange(fromAccount, toAccount, amount);
+        doExchange(fromAccount, toAccount, amount, exchangeRate);
     }
 
     private Optional<Account> getAccountByCurrency(Set<Account> accounts, CurrencyType currencyType) {
         return accounts.stream().filter(a -> currencyType.equals(a.getCurrency())).findFirst();
     }
 
-    private void doExchange(Account fromAccount, Account toAccount, BigDecimal amount) {
+    private void doExchange(Account fromAccount, Account toAccount, BigDecimal amount, BigDecimal exchangeRate) {
         BigDecimal fromAccountAmount = fromAccount.getAmount().subtract(amount);
-        BigDecimal toAccountAmount = toAccount.getAmount().add(amount);
+        BigDecimal toAccountAmount = toAccount.getAmount().add(amount.multiply(exchangeRate));
         fromAccount.setAmount(fromAccountAmount);
         toAccount.setAmount(toAccountAmount);
         accountRepository.save(fromAccount);
