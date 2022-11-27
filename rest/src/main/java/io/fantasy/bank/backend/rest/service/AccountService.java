@@ -20,12 +20,8 @@ public class AccountService {
     }
 
     public void exchange(String personalNumber, ExchangeDTO exchangeDTO) {
-        try {
-            BigDecimal exchangeRate = exchangeRateService.getExchangeRate(exchangeDTO.getFromCurrency(), exchangeDTO.getToCurrency());
-            accountServiceAdapter.exchange(personalNumber, exchangeDTO, exchangeRate);
-        } catch (Exception e) {
-            throw new RuntimeException();
-        }
+        BigDecimal exchangeRate = exchangeRateService.getExchangeRate(exchangeDTO.getFromCurrency(), exchangeDTO.getToCurrency());
+        accountServiceAdapter.exchange(personalNumber, exchangeDTO, exchangeRate);
     }
 
 }

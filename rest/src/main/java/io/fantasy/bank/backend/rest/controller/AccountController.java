@@ -24,7 +24,6 @@ public class AccountController {
     public ResponseEntity<Void> exchange(@PathVariable String personalNumber, @RequestBody ExchangeDTO exchangeDTO) {
         accountService.exchange(personalNumber, exchangeDTO);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-
     }
 
 }

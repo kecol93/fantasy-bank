@@ -1,6 +1,6 @@
 package io.fantasy.bank.backend.integration.mapper;
 
-import io.fantasy.bank.backend.common.CurrencyType;
+import io.fantasy.bank.backend.common.type.CurrencyType;
 import io.fantasy.bank.backend.integration.entity.Account;
 import io.fantasy.bank.backend.integration.entity.User;
 import io.fantasy.bank.backend.rest.model.user.RegistrationDTO;

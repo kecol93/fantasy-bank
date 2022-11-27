@@ -1,6 +1,8 @@
 package io.fantasy.bank.backend.integration.service;
 
-import io.fantasy.bank.backend.common.CurrencyType;
+import io.fantasy.bank.backend.common.exception.FantasyException;
+import io.fantasy.bank.backend.common.exception.type.FantasyErrorType;
+import io.fantasy.bank.backend.common.type.CurrencyType;
 import io.fantasy.bank.backend.integration.entity.Account;
 import io.fantasy.bank.backend.integration.entity.User;
 import io.fantasy.bank.backend.integration.repository.AccountRepository;
@@ -22,8 +24,8 @@ public class AccountEntityService {
     }
 
     public void exchange(String personalNumber, BigDecimal amount, CurrencyType fromCurrencyAccount, CurrencyType toCurrencyAccount, BigDecimal exchangeRate) {
-        User user = userRepository.findByPersonalNumber(personalNumber).get(0);
-        Account fromAccount = getAccountByCurrency(user.getAccounts(), fromCurrencyAccount).orElseThrow(RuntimeException::new);
+        User user = userRepository.findByPersonalNumber(personalNumber);
+        Account fromAccount = getAccountByCurrency(user.getAccounts(), fromCurrencyAccount).orElseThrow(() -> new FantasyException(FantasyErrorType.FB_499));
         Account toAccount = getAccountByCurrency(user.getAccounts(), toCurrencyAccount).orElse(Account.builder().amount(BigDecimal.valueOf(0)).currency(toCurrencyAccount).user(user).build());
 
         doExchange(fromAccount, toAccount, amount, exchangeRate);

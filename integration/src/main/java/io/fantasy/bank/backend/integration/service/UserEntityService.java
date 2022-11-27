@@ -1,12 +1,11 @@
 package io.fantasy.bank.backend.integration.service;
 
+import io.fantasy.bank.backend.common.exception.FantasyException;
+import io.fantasy.bank.backend.common.exception.type.FantasyErrorType;
 import io.fantasy.bank.backend.integration.entity.User;
 import io.fantasy.bank.backend.integration.repository.UserRepository;
-import org.hibernate.exception.ConstraintViolationException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
-
-import java.math.BigDecimal;
-import java.util.List;
 
 @Service
 public class UserEntityService {
@@ -17,15 +16,14 @@ public class UserEntityService {
     }
 
     public User findUserByPersonalNumber(String personalNumber) {
-        return userRepository.findByPersonalNumber(personalNumber).get(0);
+        return userRepository.findByPersonalNumber(personalNumber);
     }
 
     public void saveUser(User user) {
         try {
             userRepository.save(user);
-        } catch (ConstraintViolationException e) {
-            System.out.println(e);
-            throw new RuntimeException();
+        } catch (DataIntegrityViolationException e) {
+            throw new FantasyException(FantasyErrorType.FB_002);
         }
     }
 }

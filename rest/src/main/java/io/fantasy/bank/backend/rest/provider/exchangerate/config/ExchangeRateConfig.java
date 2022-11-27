@@ -1,6 +1,6 @@
 package io.fantasy.bank.backend.rest.provider.exchangerate.config;
 
-import io.fantasy.bank.backend.common.CurrencyType;
+import io.fantasy.bank.backend.common.type.CurrencyType;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;

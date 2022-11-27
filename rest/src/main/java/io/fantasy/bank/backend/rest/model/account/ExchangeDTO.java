@@ -1,6 +1,6 @@
 package io.fantasy.bank.backend.rest.model.account;
 
-import io.fantasy.bank.backend.common.CurrencyType;
+import io.fantasy.bank.backend.common.type.CurrencyType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
