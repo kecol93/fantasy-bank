@@ -31,6 +31,7 @@
         <org.mapstruct.version>1.5.1.Final</org.mapstruct.version>
         <lombok.version>1.18.24</lombok.version>
         <org.projectlombok.version>0.2.0</org.projectlombok.version>
+        <springdoc-openapi-ui.version>1.6.13</springdoc-openapi-ui.version>
 
     </properties>
 
@@ -40,6 +41,11 @@
                 <groupId>org.mapstruct</groupId>
                 <artifactId>mapstruct</artifactId>
                 <version>${org.mapstruct.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-ui</artifactId>
+                <version>${springdoc-openapi-ui.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

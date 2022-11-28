@@ -5,3 +5,10 @@ api:
     main-currency: "PLN"
     query-parameters:
       format: JSON
+
+springdoc:
+  group-configs:
+    - group: "fantasy-bank"
+      packages-to-scan: "io.fantasy.bank.backend.rest"
+  swagger-ui:
+    defaultModelsExpandDepth: -1
