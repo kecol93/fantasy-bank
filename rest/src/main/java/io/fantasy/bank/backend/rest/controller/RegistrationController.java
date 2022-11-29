@@ -2,7 +2,6 @@ package io.fantasy.bank.backend.rest.controller;
 
 import io.fantasy.bank.backend.rest.exception.model.FantasyError;
 import io.fantasy.bank.backend.rest.model.user.RegistrationDTO;
-import io.fantasy.bank.backend.rest.model.user.UserDTO;
 import io.fantasy.bank.backend.rest.service.RegistrationService;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -13,7 +12,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;

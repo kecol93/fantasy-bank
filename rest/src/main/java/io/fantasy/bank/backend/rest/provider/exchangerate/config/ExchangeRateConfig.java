@@ -23,11 +23,11 @@ public class ExchangeRateConfig {
     private CurrencyType mainCurrency;
 
     public URI buildUrl(String content) {
-       return UriComponentsBuilder.fromHttpUrl(host)
-               .path(path)
-               .path(content)
-               .queryParams(queryParameters)
-               .build()
-               .toUri();
+        return UriComponentsBuilder.fromHttpUrl(host)
+                .path(path)
+                .path(content)
+                .queryParams(queryParameters)
+                .build()
+                .toUri();
     }
 }

@@ -9,6 +9,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.Spy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.test.context.ConfigDataApplicationContextInitializer;
@@ -26,6 +29,9 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(SpringExtension.class)
 @EnableConfigurationProperties(value = ExchangeRateConfig.class)
@@ -36,21 +42,21 @@ class ExchangeRateServiceTest {
     @Autowired
     private ExchangeRateConfig exchangeRateConfig;
 
-    @MockBean
+    @Spy
     private RestTemplate restTemplate;
 
     private ExchangeRateService exchangeRateService;
 
     @BeforeEach
     public void beforeEach() {
-        exchangeRateService = new ExchangeRateService(exchangeRateConfig, restTemplate);
+        exchangeRateService = new ExchangeRateService(exchangeRateConfig);
     }
 
     @ParameterizedTest
     @MethodSource("provideCasesForExchangeRate")
     void shouldReturnProperExchangeRate(CurrencyType from, CurrencyType to, BigDecimal expectedExchangeRate) {
         //give
-        given(restTemplate.getForObject(any(), any())).willReturn(getExchangeRateDTO());
+        doReturn(getExchangeRateDTO()).when(restTemplate).getForObject(any(), any());
         //when
         BigDecimal actual = exchangeRateService.getExchangeRate(from, to);
         //then
@@ -69,7 +75,7 @@ class ExchangeRateServiceTest {
     }
 
     private static BigDecimal getExchangeRateUSDtoPLN() {
-        return getExchangeRateDTO().getRates().get(0).getBid();
+        return getExchangeRateDTO().getRates().get(0).getBid().setScale(4, RoundingMode.FLOOR);
     }
 
     public static ExchangeRateDTO getExchangeRateDTO() {
