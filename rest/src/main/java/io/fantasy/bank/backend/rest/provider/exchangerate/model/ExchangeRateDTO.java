@@ -2,6 +2,7 @@ package io.fantasy.bank.backend.rest.provider.exchangerate.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,6 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@EqualsAndHashCode
 public class ExchangeRateDTO {
     private String table;
     private String currency;
@@ -24,6 +26,8 @@ public class ExchangeRateDTO {
     @Getter
     @AllArgsConstructor
     @NoArgsConstructor
+    @Builder
+    @EqualsAndHashCode
     public static class Rate {
         private String no;
         private String effectiveDate;

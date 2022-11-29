@@ -17,19 +17,20 @@ import java.math.RoundingMode;
 public class ExchangeRateService {
 
     private final ExchangeRateConfig exchangeRateConfig;
-    private final RestTemplate restTemplate = new RestTemplate();
+    private final RestTemplate restTemplate;
 
-    public ExchangeRateService(ExchangeRateConfig exchangeRateConfig) {
+    public ExchangeRateService(ExchangeRateConfig exchangeRateConfig, RestTemplate restTemplate) {
         this.exchangeRateConfig = exchangeRateConfig;
+        this.restTemplate = restTemplate;
     }
 
     public BigDecimal getExchangeRate(CurrencyType from, CurrencyType to) {
         if (exchangeRateConfig.getMainCurrency().equals(from) && exchangeRateConfig.getMainCurrency().equals(to) == false) {
-            return new BigDecimal(1).divide(getExchangeRate(to).getBid(), 2, RoundingMode.HALF_EVEN);
+            return new BigDecimal(1).divide(getExchangeRate(to).getAsk(), 4, RoundingMode.FLOOR);
         }
 
         if (exchangeRateConfig.getMainCurrency().equals(to) && exchangeRateConfig.getMainCurrency().equals(from) == false) {
-            return getExchangeRate(from).getAsk();
+            return getExchangeRate(from).getBid();
         }
 
         throw new FantasyException(FantasyErrorType.FB_499);
