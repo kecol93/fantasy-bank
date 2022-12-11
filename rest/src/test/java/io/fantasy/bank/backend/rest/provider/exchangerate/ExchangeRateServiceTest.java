@@ -28,10 +28,9 @@ import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(SpringExtension.class)
 @EnableConfigurationProperties(value = ExchangeRateConfig.class)
@@ -42,21 +41,21 @@ class ExchangeRateServiceTest {
     @Autowired
     private ExchangeRateConfig exchangeRateConfig;
 
-    @Spy
+    @Mock
     private RestTemplate restTemplate;
 
     private ExchangeRateService exchangeRateService;
 
     @BeforeEach
     public void beforeEach() {
-        exchangeRateService = new ExchangeRateService(exchangeRateConfig);
+        exchangeRateService = new ExchangeRateService(exchangeRateConfig, restTemplate);
     }
 
     @ParameterizedTest
     @MethodSource("provideCasesForExchangeRate")
     void shouldReturnProperExchangeRate(CurrencyType from, CurrencyType to, BigDecimal expectedExchangeRate) {
         //give
-        doReturn(getExchangeRateDTO()).when(restTemplate).getForObject(any(), any());
+        given(restTemplate.getForObject(any(), any())).willReturn(getExchangeRateDTO());
         //when
         BigDecimal actual = exchangeRateService.getExchangeRate(from, to);
         //then
@@ -86,8 +85,8 @@ class ExchangeRateServiceTest {
                 .rates(List.of(Rate.builder()
                                 .no("230/C/NBP/2022")
                                 .effectiveDate("2022-11-29")
-                                .bid(BigDecimal.valueOf(4.4440))
-                                .ask(BigDecimal.valueOf(4.5338))
+                                .bid(BigDecimal.valueOf(4))
+                                .ask(BigDecimal.valueOf(5))
                                 .build()
                         )
                 ).build();
